@@ -14,7 +14,7 @@ const Product = ({ product }) => {
     <Card>
       <CardMedia
         sx={{ height: 0, paddingTop: "56.25%" }}
-        image=""
+        image={product.image.url}
         title={product.name}
       />
       <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -23,13 +23,15 @@ const Product = ({ product }) => {
             {product.name}
           </Typography>
           <Typography gutterBottom variant="h5" component="h2">
-            ${product.price}
+            {product.price.formatted_with_code}
           </Typography>
         </div>
-        <Typography variant="body2" color="textSecondary">
-          {" "}
-          {product.description}
-        </Typography>
+        <Typography
+          dangerouslySetInnerHTML={{ __html: product.description }}
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        />
       </CardContent>
       <CardActions
         disableSpacing
