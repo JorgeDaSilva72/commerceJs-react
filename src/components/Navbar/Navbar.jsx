@@ -1,10 +1,13 @@
 import React from "react";
 import { AppBar, Toolbar, IconButton, Badge, Typography } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from "../../assets/commerce.png";
 
-const navBar = () => {
+const navBar = ({ totalItems }) => {
+  const location = useLocation();
+
   return (
     <>
       <AppBar
@@ -17,6 +20,8 @@ const navBar = () => {
       >
         <Toolbar>
           <Typography
+            component={Link}
+            to="/"
             variant="h6"
             sx={{
               flexGrow: 1,
@@ -41,14 +46,20 @@ const navBar = () => {
               flexGrow: 1,
             }}
           />
-
-          <div sx={{}}>
-            <IconButton aria-label="Show cart items" color="inherit">
-              <Badge badgeContent={2} color="secondary">
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
-          </div>
+          {location.pathname === "/" && (
+            <div sx={{}}>
+              <IconButton
+                component={Link}
+                to="/cart"
+                aria-label="Show cart items"
+                color="inherit"
+              >
+                <Badge badgeContent={totalItems} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </>

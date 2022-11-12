@@ -9,7 +9,9 @@ import {
 } from "@mui/material";
 import { AddShoppingCart } from "@mui/icons-material";
 
-const Product = ({ product }) => {
+const Product = ({ product, onAddToCart }) => {
+  const handleAddToCart = () => onAddToCart(product.id, 1);
+
   return (
     <Card>
       <CardMedia
@@ -17,27 +19,29 @@ const Product = ({ product }) => {
         image={product.image.url}
         title={product.name}
       />
-      <CardContent sx={{ display: "flex", justifyContent: "space-between" }}>
-        <div>
+      <CardContent>
+        <div sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography gutterBottom variant="h5" component="h2">
             {product.name}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.price.formatted_with_code}
+
+          <Typography
+            gutterBottom
+            dangerouslySetInnerHTML={{ __html: product.description }}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+          />
+          <Typography variant="h5" component="h2">
+            {product.price.formatted_with_symbol}
           </Typography>
         </div>
-        <Typography
-          dangerouslySetInnerHTML={{ __html: product.description }}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        />
       </CardContent>
       <CardActions
         disableSpacing
         sx={{ display: "flex", justifyContent: "flex-end" }}
       >
-        <IconButton aria-label="Add to Cart">
+        <IconButton aria-label="Add to Cart" onClick={handleAddToCart}>
           <AddShoppingCart />
         </IconButton>
       </CardActions>
